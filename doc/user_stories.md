@@ -37,13 +37,11 @@ And I see a link to my merchant invoices index (/merchants/:merchant_id/invoices
 ```
 3. Merchant Dashboard Statistics - Favorite Customers
 
-#AR solutions branch
-#Use factory bot to create what we want but hard code status attribute.  Local variable thing? like Partials
-
 As a merchant,
 When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
 Then I see the names of the top 5 customers
 who have conducted the largest number of successful transactions with my merchant
+
 And next to each customer name I see the number of successful transactions they have
 conducted with my merchant
 ```
