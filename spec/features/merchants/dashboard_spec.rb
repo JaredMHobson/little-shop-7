@@ -92,4 +92,14 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
       end
     end
   end
+
+  describe 'User Story 1 Solo' do
+    it 'has a link to my coupons index page' do
+      expect(page).to have_link("My Coupons", href: merchant_coupons_path(@merchant1))
+
+      click_link("My Coupons")
+
+      expect(current_path).to eq(merchant_coupons_path(@merchant1))
+    end
+  end
 end
