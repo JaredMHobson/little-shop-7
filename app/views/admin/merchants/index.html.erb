@@ -17,9 +17,9 @@
           <ul>
             <% @enabled_merchants.each do |merchant| %>
               <div id="admin_merchant_<%= merchant.id %>">
-                <li class="text-with-button">
+                <li>
                   <%= link_to merchant.name, admin_merchant_path(merchant) %>
-                  <%= button_to 'Disable', admin_merchant_path(merchant), params: { status: 'disabled' }, method: :patch, data: { turbo: false }, class: "right_button" %>
+                  <%= button_to "Disable", admin_merchant_path(merchant), params: { status: 'disabled' }, method: :patch, data: { turbo: false }, class: "right_button" %>
                 </li>
               </div>
             <% end %>
@@ -33,7 +33,7 @@
               <div id="admin_merchant_<%= merchant.id %>">
                 <li>
                   <%= link_to merchant.name, admin_merchant_path(merchant) %>
-                  <%= button_to 'Enable', admin_merchant_path(merchant), params: { status: 'enabled' }, method: :patch, data: { turbo: false }, class: "right_button" %>
+                  <%= button_to "Enable", admin_merchant_path(merchant), params: { status: 'enabled' }, method: :patch, data: { turbo: false }, class: "right_button" %>
                 </li>
               </div>
             <% end %>

@@ -1,0 +1,22 @@
+<div class="container text-center">
+  <%= render 'shared/merchant_navbar' %>
+
+  <div class="row">
+      <h1 class="main_headings"><%= @merchant.name %> Coupons</h1>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <% @coupons.each do |coupon| %>
+        <ul>
+          <li><%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %></li>
+          <% if coupon.coupon_type == "percent" %>
+            <li><%= number_to_percentage(coupon.amount, precision: 0) %> off</li>
+          <% else %>
+            <li><%= number_to_currency(coupon.amount / 100.0) %> off</li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
