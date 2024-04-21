@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Merchant Coupons Index' do
+RSpec.describe 'Merchant Coupons Index Page' do
   describe 'User Story 1 Solo' do
     it 'lists all of my coupon names including their amount off and each coupons name is also a link to its show page' do
       merchant1 = create(:merchant)

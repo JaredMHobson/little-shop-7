@@ -1,0 +1,37 @@
+<div class="container text-center">
+  <%= render 'shared/merchant_navbar' %>
+
+  <div class="row">
+      <h1 class="main_headings"><%= @coupon.name %></h1>
+  </div>
+
+  <div class="row">
+    <div class="col">
+
+      <ul>
+        <li>Code: <%= @coupon.code %></li>
+
+        <% if @coupon.coupon_type == 'percent' %>
+          <li>Amount: <%= number_to_percentage(@coupon.amount, precision: 0) %> Off</li>
+        <% else %>
+          <li>Amount: <%= number_to_currency(@coupon.amount / 100.0) %> Off</li>
+        <% end %>
+
+        <li>
+          Status: <%= @coupon.status.capitalize %>
+
+          <% if @coupon.enabled? %>
+            <%= button_to "Disable", merchant_coupon_path(@merchant, @coupon), params: {status: 'disabled'}, method: :patch, data: { turbo: false }, disabled: (@coupon.has_pending_invoices?), class: "right_button" %>
+          <% else %>
+            <%= button_to "Enable", merchant_coupon_path(@merchant, @coupon), params: {status: 'enabled'}, method: :patch, data: { turbo: false }, disabled: (@merchant.max_coupons?), class: "right_button" %>
+          <% end %>
+
+        </li>
+        <li>Times Used: <%= @coupon.count_usage %></li>
+      </ul>
+
+    </div>
+    <div class="col">
+    </div>
+  </div>
+</div>

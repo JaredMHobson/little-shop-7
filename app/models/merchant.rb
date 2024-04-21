@@ -54,6 +54,8 @@ class Merchant < ApplicationRecord
     .order("total_revenue DESC")
     .limit(5)
   end
-    
-end
 
+  def max_coupons?
+    coupons.enabled.count > 4
+  end
+end

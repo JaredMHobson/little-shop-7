@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Merchant Coupons Index' do
+RSpec.describe 'Merchant Coupon New Page' do
   describe 'User Story 2 Solo' do
     it 'has a form to add a new coupon and when I fill it in with a name, unique code, an amount, and type and I click submit I am taken back to my coupon index page and see my coupon. Returns an error message if code is not unique' do
       merchant1 = create(:merchant)
