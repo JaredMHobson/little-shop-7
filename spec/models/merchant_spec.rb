@@ -128,7 +128,7 @@ RSpec.describe Merchant, type: :model do
         create(:invoice_item, item: item1, invoice: invoice4)
         create(:invoice_item, item: @mat, invoice: invoice3)
 
-        expect(merchant2.unique_invoices).to eq([invoice1, invoice2, invoice4])
+        expect(merchant2.unique_invoices).to match_array([invoice1, invoice2, invoice4])
         expect(merchant2.unique_invoices).to_not include(invoice3)
       end
     end

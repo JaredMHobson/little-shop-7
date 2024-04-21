@@ -139,5 +139,53 @@ RSpec.describe Invoice, type: :model do
       expect(invoice1.total_revenue_for_merchant(merchant1)).to eq(64000)
       expect(invoice2.total_revenue_for_merchant(merchant1)).to eq(7150)
     end
+
+    describe '#net_revenue_for_merchant' do
+      it 'returns the net revenue of an invoice for only a specific merchants items by taking a percent off their items prices if the coupon is a percent type and just shows the total revenue if there is no coupon' do
+        merchant1 = create(:merchant)
+        merchant2 = create(:merchant)
+
+        coupon1 = create(:coupon, coupon_type: 0, amount: 50, merchant: merchant1)
+
+        item1 = create(:item, merchant: merchant1)
+        item2 = create(:item, merchant: merchant1)
+        item3 = create(:item, merchant: merchant1)
+        item4 = create(:item, merchant: merchant2)
+
+        invoice1 = create(:invoice, coupon: coupon1)
+
+        create(:invoice_item, invoice: invoice1, item: item1, quantity: 5, unit_price: 5000) #25000
+        create(:invoice_item, invoice: invoice1, item: item2, quantity: 10, unit_price: 2000) #2000
+        create(:invoice_item, invoice: invoice1, item: item3, quantity: 3, unit_price: 4000) #12000
+        create(:invoice_item, invoice: invoice1, item: item4, quantity: 6, unit_price: 12000) #72000
+
+        expect(invoice1.net_revenue_for_merchant(merchant1)).to eq(28500.0)
+        expect(invoice1.net_revenue_for_merchant(merchant2)).to eq(36000)
+      end
+
+      it 'returns the net revenue of an invoice for only a specific merchants items by taking a flat dollar amount off their items prices if the coupon is a dollar type and returns 0 if the revenue is less than 0' do
+        merchant1 = create(:merchant)
+
+        coupon1 = create(:coupon, coupon_type: 1, amount: 5000, merchant: merchant1)
+
+        item1 = create(:item, merchant: merchant1)
+        item2 = create(:item, merchant: merchant1)
+        item3 = create(:item, merchant: merchant1)
+
+        invoice1 = create(:invoice, coupon: coupon1)
+
+        create(:invoice_item, invoice: invoice1, item: item1, quantity: 5, unit_price: 5000) #25000
+        create(:invoice_item, invoice: invoice1, item: item2, quantity: 10, unit_price: 2000) #20000
+        create(:invoice_item, invoice: invoice1, item: item3, quantity: 3, unit_price: 4000) #12000
+
+        coupon2 = create(:coupon, coupon_type: 1, amount: 50000, merchant: merchant1)
+        item4 = create(:item, merchant: merchant1)
+        invoice2 = create(:invoice, coupon: coupon2)
+        create(:invoice_item, invoice: invoice2, item: item4, quantity: 7, unit_price: 7000) #49000
+
+        expect(invoice1.net_revenue_for_merchant(merchant1)).to eq(52000)
+        expect(invoice2.net_revenue_for_merchant(merchant1)).to eq(0)
+      end
+    end
   end
 end

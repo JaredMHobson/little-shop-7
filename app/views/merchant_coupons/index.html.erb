@@ -16,9 +16,9 @@
           <li><%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %></li>
 
           <% if coupon.coupon_type == "percent" %>
-            <li>Amount: <%= number_to_percentage(coupon.amount, precision: 0) %> off</li>
+            <li>Amount: <%= number_to_percentage(coupon.amount, precision: 0) %> Off</li>
           <% else %>
-            <li>Amount: <%= number_to_currency(coupon.amount / 100.0) %> off</li>
+            <li>Amount: <%= number_to_currency(coupon.amount / 100.0) %> Off</li>
           <% end %>
 
         </ul>
@@ -38,9 +38,9 @@
           <li><%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %></li>
 
           <% if coupon.coupon_type == "percent" %>
-            <li>Amount: <%= number_to_percentage(coupon.amount, precision: 0) %> off</li>
+            <li>Amount: <%= number_to_percentage(coupon.amount, precision: 0) %> Off</li>
           <% else %>
-            <li>Amount: <%= number_to_currency(coupon.amount / 100.0) %> off</li>
+            <li>Amount: <%= number_to_currency(coupon.amount / 100.0) %> Off</li>
           <% end %>
 
         </ul>

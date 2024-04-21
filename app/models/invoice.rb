@@ -31,4 +31,14 @@ class Invoice < ApplicationRecord
     items.where(merchant: merchant)
     .sum("invoice_items.unit_price * invoice_items.quantity")
   end
+
+  def net_revenue_for_merchant(merchant)
+    if coupon.nil?
+      total_revenue_for_merchant(merchant)
+    elsif coupon.coupon_type == 'percent'
+      total_revenue_for_merchant(merchant) * coupon.amount / 100.0
+    else
+      [(total_revenue_for_merchant(merchant) - coupon.amount), 0].max
+    end
+  end
 end

@@ -16,9 +16,9 @@ RSpec.describe 'Merchant Coupons Index Page' do
         expect(page).to have_link(coupon.name, href: merchant_coupon_path(merchant1, coupon))
 
         if coupon.coupon_type == "percent"
-          expect(page).to have_content("Amount: #{coupon.amount}% off")
+          expect(page).to have_content("Amount: #{coupon.amount}% Off")
         else
-          expect(page).to have_content("Amount: $#{(coupon.amount / 100.0).round(2)} off")
+          expect(page).to have_content("Amount: $#{(coupon.amount / 100.00).round(2)} Off")
         end
       end
 

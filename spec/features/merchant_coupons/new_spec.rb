@@ -9,7 +9,7 @@ RSpec.describe 'Merchant Coupon New Page' do
       visit merchant_coupons_path(merchant1)
 
       expect(page).to_not have_content('Random Cool Coupon Name')
-      expect(page).to_not have_content('100% off')
+      expect(page).to_not have_content('100% Off')
 
       visit new_merchant_coupon_path(merchant1)
 
@@ -25,7 +25,7 @@ RSpec.describe 'Merchant Coupon New Page' do
 
       within '#disabled_coupons' do
         expect(page).to have_content('Random Cool Coupon Name')
-        expect(page).to have_content('100% off')
+        expect(page).to have_content('100% Off')
       end
 
       visit new_merchant_coupon_path(merchant1)
