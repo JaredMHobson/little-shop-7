@@ -39,4 +39,33 @@ RSpec.describe 'Merchant Coupons Index Page' do
       expect(current_path).to eq(new_merchant_coupon_path(merchant1))
     end
   end
+
+  describe 'User Story 6 Solo' do
+    it 'separates my coupons between enabled and disabled coupons' do
+      merchant1 = create(:merchant)
+      coupon_list = create_list(:coupon, 4, merchant: merchant1)
+      enabled_coupon = create(:coupon, merchant: merchant1, status: 1)
+      disabled_coupon = create(:coupon, merchant: merchant1, status: 0)
+
+      visit merchant_coupons_path(merchant1)
+
+      within '#enabled_coupons' do
+        coupon_list.each do |coupon|
+          expect(page).to have_content(coupon.name) if coupon.enabled?
+        end
+
+        expect(page).to have_content(enabled_coupon.name)
+        expect(page).to_not have_content(disabled_coupon.name)
+      end
+
+      within '#disabled_coupons' do
+        coupon_list.each do |coupon|
+          expect(page).to have_content(coupon.name) if coupon.disabled?
+        end
+
+        expect(page).to have_content(disabled_coupon.name)
+        expect(page).to_not have_content(enabled_coupon.name)
+      end
+    end
+  end
 end

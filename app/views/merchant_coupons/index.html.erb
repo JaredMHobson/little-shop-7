@@ -7,29 +7,42 @@
 
   <div class="row">
     <div class="col" id="enabled_coupons">
-        <% @enabled_coupons.each do |coupon| %>
-          <ul>
-            <li><%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %></li>
-            <% if coupon.coupon_type == "percent" %>
-              <li>Amount: <%= number_to_percentage(coupon.amount, precision: 0) %> off</li>
-            <% else %>
-              <li>Amount: <%= number_to_currency(coupon.amount / 100.0) %> off</li>
-            <% end %>
-          </ul>
-        <% end %>
-        <%= link_to 'Create new coupon', new_merchant_coupon_path(@merchant) %>
-      </div>
-    </div>
 
-    <div class="col" id="disabled_coupons">
-      <% @disabled_coupons.each do |coupon| %>
+      <h2 class="main_headings">Enabled Coupons</h2>
+
+      <% @enabled_coupons.each do |coupon| %>
         <ul>
+
           <li><%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %></li>
+
           <% if coupon.coupon_type == "percent" %>
             <li>Amount: <%= number_to_percentage(coupon.amount, precision: 0) %> off</li>
           <% else %>
             <li>Amount: <%= number_to_currency(coupon.amount / 100.0) %> off</li>
           <% end %>
+
+        </ul>
+      <% end %>
+
+      <h2><%= link_to 'Create new coupon', new_merchant_coupon_path(@merchant) %></h2>
+
+    </div>
+
+    <div class="col" id="disabled_coupons">
+
+    <h2 class="main_headings">Disabled Coupons</h2>
+
+      <% @disabled_coupons.each do |coupon| %>
+        <ul>
+
+          <li><%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %></li>
+
+          <% if coupon.coupon_type == "percent" %>
+            <li>Amount: <%= number_to_percentage(coupon.amount, precision: 0) %> off</li>
+          <% else %>
+            <li>Amount: <%= number_to_currency(coupon.amount / 100.0) %> off</li>
+          <% end %>
+
         </ul>
       <% end %>
     </div>
