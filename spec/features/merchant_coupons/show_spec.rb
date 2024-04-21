@@ -40,7 +40,7 @@ RSpec.describe 'Merchant Coupon Show Page' do
   end
 
   describe 'User Story 4 Solo' do
-    it 'has a disable button next to my enabled coupons and when i click that button, im taken back to the coupon show page and see that the status is now disabled. This coupon cannot be disabled if there is a pending invoice with it' do 
+    it 'has a disable button next to my enabled coupons on their show page and when i click that button, im taken back to the coupon show page and see that the status is now disabled. This coupon cannot be disabled if there is a pending invoice with it' do 
       merchant1 = create(:merchant)
       coupon1 = create(:coupon, merchant: merchant1, status: 1)
       coupon2 = create(:coupon, merchant: merchant1, status: 1)
@@ -62,6 +62,43 @@ RSpec.describe 'Merchant Coupon Show Page' do
 
       expect(page).to have_content('Status: Enabled')
       expect(page).to have_button('Disable', disabled: true)
+    end
+  end
+
+  describe 'User Story 5 Solo' do
+    it 'has an enable button next to my disabled coupons on their show page and when i click that button, im taken back to the coupon show page and see that the status is now enabled. This coupon cannot be enabled if there are already 5 enabled coupons for this merchant' do 
+      merchant1 = create(:merchant)
+      coupon1 = create(:coupon, merchant: merchant1, status: 1)
+      coupon2 = create(:coupon, merchant: merchant1, status: 1)
+      coupon3 = create(:coupon, merchant: merchant1, status: 1)
+      coupon4 = create(:coupon, merchant: merchant1, status: 1)
+      coupon5 = create(:coupon, merchant: merchant1, status: 0)
+      coupon6 = create(:coupon, merchant: merchant1, status: 0)
+
+      visit merchant_coupon_path(merchant1, coupon5)
+
+      expect(page).to have_content('Status: Disabled')
+      expect(page).to have_button('Enable')
+
+      click_button('Enable')
+
+      expect(current_path).to eq(merchant_coupon_path(merchant1, coupon5))
+
+      expect(page).to have_content('Status: Enabled')
+
+      visit merchant_coupon_path(merchant1, coupon6)
+
+      expect(page).to have_content('Status: Disabled')
+      expect(page).to have_button('Enable', disabled: true)
+
+      visit merchant_coupon_path(merchant1, coupon1)
+
+      click_button('Disable')
+
+      visit merchant_coupon_path(merchant1, coupon6)
+
+      expect(page).to have_content('Status: Disabled')
+      expect(page).to have_button('Enable', disabled: false)
     end
   end
 end
