@@ -63,5 +63,15 @@ RSpec.describe Coupon, type: :model do
         expect(coupon2.has_pending_invoices?).to be false
       end
     end
+
+    describe '#formatted_amount' do
+      it 'formats the amount based on the coupon type' do
+        coupon1 = create(:coupon, coupon_type: 0, amount: 23)
+        coupon2 = create(:coupon, coupon_type: 1, amount: 4500)
+
+        expect(coupon1.formatted_amount).to eq('23%')
+        expect(coupon2.formatted_amount).to eq('$45.00')
+      end
+    end
   end
 end

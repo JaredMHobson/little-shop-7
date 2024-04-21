@@ -20,15 +20,12 @@
 
     <div class="col">
       <% if @invoice.coupon.nil? %>
+        <p>No Coupon Found</p>
       <% else %>
         <ul>
           <li>Coupon Name: <%= link_to "#{@invoice.coupon.name}", merchant_coupon_path(@merchant, @invoice.coupon) %></li>
           <li>Coupon Code: <%= @invoice.coupon.code %></li>
-          <% if @invoice.coupon.coupon_type == "percent" %>
-            <li>Amount: <%= number_to_percentage(@invoice.coupon.amount, precision: 0) %> Off</li>
-          <% else %>
-            <li>Amount: <%= number_to_currency(@invoice.coupon.amount / 100.0) %> Off</li>
-          <% end %>
+          <li>Amount: <%= @invoice.coupon.formatted_amount %> Off</li>
         </ul>
       <% end %>
     </div>

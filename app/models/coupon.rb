@@ -1,4 +1,6 @@
 class Coupon < ApplicationRecord
+  include ActionView::Helpers::NumberHelper
+
   enum :status, [:disabled, :enabled], validate: true
   enum :coupon_type, [:percent, :dollar], validate: true
 
@@ -16,5 +18,13 @@ class Coupon < ApplicationRecord
 
   def has_pending_invoices?
     invoices.in_progress.count > 0
+  end
+
+  def formatted_amount
+    if coupon_type == 'percent'
+      number_to_percentage(amount, precision: 0)
+    else
+      number_to_currency(amount / 100.0)
+    end
   end
 end

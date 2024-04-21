@@ -6,6 +6,9 @@ RSpec.describe 'Merchant Coupons Index Page' do
       merchant1 = create(:merchant)
       coupon_list = create_list(:coupon, 5, merchant: merchant1)
 
+      percent_coupon = create(:coupon, coupon_type: 0, merchant: merchant1)
+      dollar_coupon = create(:coupon, coupon_type: 1, merchant: merchant1)
+
       merchant2 = create(:merchant)
       coupon2 = create(:coupon, merchant: merchant2)
 
@@ -16,11 +19,19 @@ RSpec.describe 'Merchant Coupons Index Page' do
         expect(page).to have_link(coupon.name, href: merchant_coupon_path(merchant1, coupon))
 
         if coupon.coupon_type == "percent"
-          expect(page).to have_content("Amount: #{coupon.amount}% Off")
+          expect(page).to have_content("Amount: #{coupon.formatted_amount} Off")
         else
-          expect(page).to have_content("Amount: $#{(coupon.amount / 100.00).round(2)} Off")
+          expect(page).to have_content("Amount: #{coupon.formatted_amount} Off")
         end
       end
+
+      expect(page).to have_content(percent_coupon.name)
+      expect(page).to have_link(percent_coupon.name, href: merchant_coupon_path(merchant1, percent_coupon))
+      expect(page).to have_content("Amount: #{percent_coupon.formatted_amount} Off")
+
+      expect(page).to have_content(dollar_coupon.name)
+      expect(page).to have_link(dollar_coupon.name, href: merchant_coupon_path(merchant1, dollar_coupon))
+      expect(page).to have_content("Amount: #{dollar_coupon.formatted_amount} Off")
 
       expect(page).to_not have_content(coupon2.name)
     end

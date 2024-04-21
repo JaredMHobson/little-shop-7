@@ -15,11 +15,24 @@
         <%= f.submit 'Update Invoice Status' %>
       <% end %>
 
-      <p>Created on: <%= @invoice.formatted_date %></p>
-      <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue / 100.0) %></p>
-      <p>Customer: <%= @invoice.customer_name %></p>
+      <ul>
+        <li>Created on: <%= @invoice.formatted_date %></li>
+        <li>Total Revenue: <%= number_to_currency(@invoice.total_revenue / 100.0) %></li>
+        <li>Net Revenue: <%= number_to_currency(@invoice.net_revenue / 100.0) %></li>
+        <li>Customer: <%= @invoice.customer_name %></li>
+      </ul>
     </div>
+
     <div class="col">
+      <% if @invoice.coupon.nil? %>
+        <p>No Coupon Found</p>
+      <% else %>
+        <ul>
+          <li>Coupon Name: <%= @invoice.coupon.name %></li>
+          <li>Coupon Code: <%= @invoice.coupon.code %></li>
+          <li>Amount: <%= @invoice.coupon.formatted_amount %> Off</li>
+        </ul>
+      <% end %>
     </div>
   </div>
 

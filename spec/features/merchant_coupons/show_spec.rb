@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Merchant Coupon Show Page' do
   describe 'User Story 3 Solo' do
-    it 'has a form to add a new coupon and when I fill it in with a name, unique code, an amount, and type and I click submit I am taken back to my coupon index page and see my coupon. Returns an error message if code is not unique' do
+    it 'shows that coupons name and code and the amount off value as well as its status and a count of how many times that coupon has been used' do
       merchant1 = create(:merchant)
       coupon1 = create(:coupon, merchant: merchant1, name: 'Half Off', code: '50OFF', coupon_type: 'percent', amount: 50, status: 0)
       coupon2 = create(:coupon, merchant: merchant1, name: 'Save $10 On All Shoes', code: '10OFF', coupon_type: 'dollar', amount: 1000, status: 1)

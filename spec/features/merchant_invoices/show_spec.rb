@@ -118,7 +118,7 @@ RSpec.describe 'Merchant Invoices Show' do
   end
 
   describe 'User Story 7 Solo' do
-    it 'shows the net revenue that will be generated from all of my items on the invoice after applying any coupon' do
+    it 'shows the net revenue that will be generated from all of my items on the invoice after applying any coupon and I see the name, as a link to that coupons show page, and code of the coupon' do
       coupon1 = create(:coupon, coupon_type: 0, amount: 50, merchant: @merchant1)
       @invoice1.update(coupon: coupon1)
 
