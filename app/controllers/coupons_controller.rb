@@ -1,4 +1,4 @@
-class MerchantCouponsController < ApplicationController
+class CouponsController < ApplicationController
   def index
     @merchant = Merchant.find(params[:merchant_id])
     @enabled_coupons = @merchant.coupons.enabled

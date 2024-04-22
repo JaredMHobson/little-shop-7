@@ -39,12 +39,15 @@
 
     <div class="col">
       <div class="top_selling_items">
-          <h2 class="main_headings">Most Popular Items and Date of most sales</h2>
-          <ul>
+          <h2 class="main_headings">Top Items</h2>
+          <ol>
             <% @merchant.most_popular_items.each do |item| %>
-            <li><%= item.name %> - <%= item.top_selling_date.strftime("%m/%d/%y") %></li>
+              <li>
+                <%= item.name %> - <%= number_to_currency(item.total_revenue / 100.0) %> in sales
+                <p>Top day for <%= item.name %> was <%= item.top_selling_date.strftime("%m/%d/%y") %></p>
+              </li>
             <% end %>
-          </ul>
+          </ol>
         </div>  
     </div>
   </div>

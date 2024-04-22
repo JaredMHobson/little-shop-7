@@ -9,11 +9,9 @@
 
   <div class="row">
     <div class="col" align="left">
-      <ul>
-        <li>Description: <%= @item.description %></li>
-        <li>Current Price: <%= number_to_currency(@item.unit_price / 100.0) %></li>
-      </ul>
-      <%= link_to "Update #{@item.name} info" , edit_merchant_item_path(@merchant, @item) %>
+      <p>Description: <%= @item.description %></p>
+      <p>Current Price: <%= number_to_currency(@item.unit_price / 100.0) %></p>
+      <p><%= link_to "Update #{@item.name} info" , edit_merchant_item_path(@merchant, @item) %></p>
     </div>
     <div class="col">
     </div>

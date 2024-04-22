@@ -41,7 +41,7 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
     @transactions_invoice5 = create_list(:transaction, 3, invoice: @invoices_customer5, result: 1)
     @transactions_invoice6 = create_list(:transaction, 9, invoice: @invoices_customer6, result: 1)
 
-    visit dashboard_merchant_path(@merchant1)
+    visit merchant_dashboard_index_path(@merchant1)
   end
 
   describe ' USER STORY #1' do
@@ -64,7 +64,7 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
     it 'shows the names of the top 5 customers with the largest number of successful transactions' do
       within '.top5' do
         @merchant1.top_five_customers.each do |customer|
-          expect(page).to have_content("Customer name: #{customer.first_name} #{customer.last_name} - #{customer.transaction_count} successful transactions")
+          expect(page).to have_content("#{customer.first_name} #{customer.last_name} - #{customer.transaction_count} purchases")
         end
       end
     end
