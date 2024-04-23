@@ -13,10 +13,21 @@
         <li>Status: <%= @invoice.status %></li>
         <li>Created on: <%= @invoice.formatted_date %></li>
         <li>Total Revenue: <%= number_to_currency(@invoice.total_revenue_for_merchant(@merchant) / 100.0) %></li>
+        <li>Net Revenue: <%= number_to_currency(@invoice.net_revenue_for_merchant(@merchant) / 100.0) %></li>
         <li>Customer: <%= @invoice.customer_name %></li>
       </ul>
     </div>
+
     <div class="col">
+      <% if @invoice.coupon.nil? %>
+        <p>No Coupon Found</p>
+      <% else %>
+        <ul>
+          <li>Coupon Name: <%= link_to "#{@invoice.coupon.name}", merchant_coupon_path(@merchant, @invoice.coupon) %></li>
+          <li>Coupon Code: <%= @invoice.coupon.code %></li>
+          <li>Amount: <%= @invoice.coupon.formatted_amount %> Off</li>
+        </ul>
+      <% end %>
     </div>
   </div>
 

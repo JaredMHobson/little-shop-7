@@ -53,7 +53,8 @@ RSpec.describe "Admin Dashboard Page", type: :feature do
     @transactions_invoice12 = create_list(:transaction, 3, invoice: @invoice_customer5, result: 0)
     @transactions_invoice13 = create_list(:transaction, 9, invoice: @invoice_customer6, result: 0)
     @transactions_invoice14 = create_list(:transaction, 10, invoice: @invoice_customer7, result: 0)
-    visit admin_index_path
+
+    visit admin_dashboard_index_path
   end
 
   describe "User Story 19" do
@@ -81,7 +82,7 @@ RSpec.describe "Admin Dashboard Page", type: :feature do
     end
 
     it "displays top five customers' transaction count" do
-      expect(page).to have_content("successful purchases", count: 5)
+      expect(page).to have_content("purchases", count: 5)
     end
   end
 
@@ -91,7 +92,7 @@ RSpec.describe "Admin Dashboard Page", type: :feature do
     end
 
     it "has a link to the invoice show page from the invoice ID" do
-      expect(page).to have_link("Invoice: ##{@invoice_customer7.id}")
+      expect(page).to have_link("Invoice ##{@invoice_customer7.id}")
     end
   end
 

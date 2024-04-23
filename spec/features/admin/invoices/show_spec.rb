@@ -99,4 +99,53 @@ RSpec.describe "the admin invoices show page" do
       expect(page).to have_field(:status, with: 'completed')
     end
   end
+
+  describe 'User Story 8 Solo' do
+    it 'has the name and code of the coupon that was used if there was one, and the total revenue and net revenue for that invoice shows' do
+      merchant1 = create(:merchant)
+      merchant2 = create(:merchant)
+
+      coupon1 = create(:coupon, coupon_type: 1, amount: 58000, merchant: merchant1)
+
+      item1 = create(:item, merchant: merchant1)
+      item2 = create(:item, merchant: merchant1)
+      item3 = create(:item, merchant: merchant1)
+      item4 = create(:item, merchant: merchant1)
+      item5 = create(:item, merchant: merchant2)
+
+      invoice1 = create(:invoice, coupon: coupon1)
+
+      create(:invoice_item, invoice: invoice1, item: item1, quantity: 5, unit_price: 5000) #25000
+      create(:invoice_item, invoice: invoice1, item: item2, quantity: 10, unit_price: 2000) #20000
+      create(:invoice_item, invoice: invoice1, item: item3, quantity: 3, unit_price: 4000) #12000
+      create(:invoice_item, invoice: invoice1, item: item4, quantity: 7, unit_price: 7000) #49000
+      create(:invoice_item, invoice: invoice1, item: item5, quantity: 1, unit_price: 2000) #2000
+
+      visit admin_invoice_path(invoice1)
+
+      expect(page).to have_content("Coupon Name: #{coupon1.name}")
+      expect(page).to have_content("Coupon Code: #{coupon1.code}")
+      expect(page).to have_content("Amount: $580.00 Off")
+      expect(page).to have_content('Total Revenue: $1,080.00')
+      expect(page).to have_content('Net Revenue: $500.00')
+
+      coupon1.update(coupon_type: 0, amount: 40)
+
+      visit admin_invoice_path(invoice1)
+
+      expect(page).to have_content("Coupon Name: #{coupon1.name}")
+      expect(page).to have_content("Coupon Code: #{coupon1.code}")
+      expect(page).to have_content("Amount: 40% Off")
+      expect(page).to have_content('Total Revenue: $1,080.00')
+      expect(page).to have_content('Net Revenue: $656.00')
+
+      invoice1.update(coupon: nil)
+
+      visit admin_invoice_path(invoice1)
+
+      expect(page).to have_content('No Coupon Found')
+      expect(page).to have_content('Total Revenue: $1,080.00')
+      expect(page).to have_content('Net Revenue: $1,080.00')
+    end
+  end
 end

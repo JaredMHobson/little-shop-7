@@ -1,0 +1,36 @@
+<div class="container text-center">
+  <%= render 'shared/merchant_navbar' %>
+
+  <div class="row">
+      <h1 class="main_headings"><%= @merchant.name %> Coupons</h1>
+  </div>
+
+  <div class="row">
+    <div class="col" id="enabled_coupons">
+
+      <h2 class="main_headings">Enabled Coupons</h2>
+
+      <% @enabled_coupons.each do |coupon| %>
+        <ul>
+          <li><%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %></li>
+          <li>Amount: <%= coupon.formatted_amount %> Off</li>
+        </ul>
+      <% end %>
+
+      <h2><%= link_to 'Create new coupon', new_merchant_coupon_path(@merchant) %></h2>
+
+    </div>
+
+    <div class="col" id="disabled_coupons">
+
+    <h2 class="main_headings">Disabled Coupons</h2>
+
+      <% @disabled_coupons.each do |coupon| %>
+        <ul>
+          <li><%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %></li>
+          <li>Amount: <%= coupon.formatted_amount %> Off</li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>

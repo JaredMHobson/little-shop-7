@@ -116,4 +116,32 @@ RSpec.describe 'Merchant Invoices Show' do
       end
     end
   end
+
+  describe 'User Story 7 Solo' do
+    it 'shows the net revenue that will be generated from all of my items on the invoice after applying any coupon and I see the name, as a link to that coupons show page, and code of the coupon' do
+      coupon1 = create(:coupon, coupon_type: 0, amount: 20, merchant: @merchant1)
+      @invoice1.update(coupon: coupon1)
+
+      visit merchant_invoice_path(@merchant1, @invoice1)
+
+      within '#merchant_invoice_info' do
+        expect(page).to have_content("Total Revenue: $2,150.00")
+        expect(page).to have_content("Net Revenue: $1,720.00")
+      end
+
+      expect(page).to have_link("#{coupon1.name}", href: merchant_coupon_path(@merchant1, coupon1))
+
+      coupon2 = create(:coupon, coupon_type: 1, amount: 30000, merchant: @merchant1)
+      @invoice2.update(coupon: coupon2)
+
+      visit merchant_invoice_path(@merchant1, @invoice2)
+
+      within '#merchant_invoice_info' do
+        expect(page).to have_content("Total Revenue: $352.50")
+        expect(page).to have_content("Net Revenue: $52.50")
+      end
+
+      expect(page).to have_link("#{coupon2.name}", href: merchant_coupon_path(@merchant1, coupon2))
+    end
+  end
 end

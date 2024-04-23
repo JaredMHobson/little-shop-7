@@ -6,6 +6,7 @@ class Merchant < ApplicationRecord
   has_many :invoices, through: :invoice_items
   has_many :transactions, through: :invoices
   has_many :customers, through: :invoices
+  has_many :coupons
 
   validates :name, presence: true
 
@@ -53,6 +54,8 @@ class Merchant < ApplicationRecord
     .order("total_revenue DESC")
     .limit(5)
   end
-    
-end
 
+  def max_coupons?
+    coupons.enabled.count > 4
+  end
+end

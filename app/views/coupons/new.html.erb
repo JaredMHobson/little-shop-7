@@ -1,0 +1,36 @@
+<div class="container text-center">
+  <%= render 'shared/merchant_navbar' %>
+
+  <div class="row">
+      <h1 class="main_headings">Add a coupon to <%= @merchant.name %></h1>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <ul>
+        <%= form_with url: merchant_coupons_path(@merchant), data: {turbo: false} do |f| %>
+          <li>
+            <%= f.label :name, 'Name:' %>
+            <%= f.text_field :name %>
+          </li>
+          <li>
+            <%= f.label :code, 'Unique Code:' %>
+            <%= f.text_field :code %>
+          </li>
+          <li>
+            <%= f.label :amount, 'Amount In Percent or Pennies:' %>
+            <%= f.number_field :amount %>
+          </li>
+          <li>
+            Coupon Type: 
+            <%= f.radio_button :coupon_type, "percent" %>
+            <%= f.label :coupon_type, 'Percent' %>
+            <%= f.radio_button :coupon_type, "dollar" %>
+            <%= f.label :coupon_type, 'Dollar' %>
+          </li>
+          <%= f.submit 'Submit' %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

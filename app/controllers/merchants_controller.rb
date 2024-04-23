@@ -1,8 +1,4 @@
 class MerchantsController < ApplicationController
-  def dashboard 
-    @merchant = Merchant.find(params[:id])
-  end
-
   def create
     merchant = Merchant.new(merchant_params)
 

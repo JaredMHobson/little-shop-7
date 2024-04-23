@@ -36,7 +36,7 @@ RSpec.describe "the admin merchants index page" do
       visit admin_merchants_path
 
       within '#admin_merchants_list' do
-        @merchant_list.each do |merchant|
+        Merchant.all.each do |merchant|
           within "#admin_merchant_#{merchant.id}" do
             if merchant.enabled?
               expect(page).to have_button('Disable')

@@ -10,10 +10,14 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
+
   <%= render 'shared/header' %>
-    <% flash.each do |type, message| %>
-      <p><%= message %></p>
-    <% end %>
+
     <%= yield %>
+
+  <% flash.each do |type, message| %>
+    <p><%= message %></p>
+  <% end %>
+
   </body>
 </html>

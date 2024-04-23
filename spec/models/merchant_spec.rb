@@ -51,6 +51,7 @@ RSpec.describe Merchant, type: :model do
 
   describe "relationships" do
     it { should have_many(:items) }
+    it { should have_many(:coupons) }
     it { should have_many(:invoice_items).through(:items) }
     it { should have_many(:invoices).through(:invoice_items) }
     it { should have_many(:transactions).through(:invoices) }
@@ -62,7 +63,23 @@ RSpec.describe Merchant, type: :model do
   end
 
   describe '#instance methods' do
-  
+    describe '#max_coupons?' do
+      it 'returns true if the merchant has more than 4 enabled coupons' do
+        merchant1 = create(:merchant)
+        coupon1 = create(:coupon, merchant: merchant1, status: 1)
+        coupon2 = create(:coupon, merchant: merchant1, status: 1)
+        coupon3 = create(:coupon, merchant: merchant1, status: 1)
+        coupon4 = create(:coupon, merchant: merchant1, status: 1)
+        coupon5 = create(:coupon, merchant: merchant1, status: 0)
+
+        expect(merchant1.max_coupons?).to be false
+
+        coupon5.update(status: 1)
+
+        expect(merchant1.max_coupons?).to be true
+      end
+    end
+
     it "#most_popular_items" do
       expect(@merchant1.most_popular_items).to match_array([@mat, @table, @mug, @plant, @ember])
     end
@@ -111,7 +128,7 @@ RSpec.describe Merchant, type: :model do
         create(:invoice_item, item: item1, invoice: invoice4)
         create(:invoice_item, item: @mat, invoice: invoice3)
 
-        expect(merchant2.unique_invoices).to eq([invoice1, invoice2, invoice4])
+        expect(merchant2.unique_invoices).to match_array([invoice1, invoice2, invoice4])
         expect(merchant2.unique_invoices).to_not include(invoice3)
       end
     end

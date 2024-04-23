@@ -1,1 +1,19 @@
-<h1> Items </h1>
+<div class="container text-center">
+  <%= render 'shared/merchant_navbar' %>
+
+  <div class="row">
+    <div class="col">
+      <h1 class="main_headings"><%= @item.name %></h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col" align="left">
+      <p>Description: <%= @item.description %></p>
+      <p>Current Price: <%= number_to_currency(@item.unit_price / 100.0) %></p>
+      <p><%= link_to "Update #{@item.name} info" , edit_merchant_item_path(@merchant, @item) %></p>
+    </div>
+    <div class="col">
+    </div>
+  </div>
+</div>
