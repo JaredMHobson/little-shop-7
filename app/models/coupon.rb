@@ -27,4 +27,12 @@ class Coupon < ApplicationRecord
       number_to_currency(amount / 100.0)
     end
   end
+
+  def self.enabled_sorted_by_popularity
+    enabled.left_outer_joins(:transactions).select('coupons.*, COUNT(CASE WHEN transactions.result = 1 then 1 end) AS total_count').group(:id).order(total_count: :desc, id: :asc)
+  end
+
+  def self.disabled_sorted_by_popularity
+    disabled.left_outer_joins(:transactions).select('coupons.*, COUNT(CASE WHEN transactions.result = 1 then 1 end) AS total_count').group(:id).order(total_count: :desc, id: :asc)
+  end
 end
