@@ -33,7 +33,7 @@ RSpec.describe 'Merchant Coupons Index Page' do
   end
 
   describe 'User Story 2 Solo' do
-    it 'lists all of my coupon names including their amount off and each coupons name is also a link to its show page' do
+    it 'has a link to create a new coupon and when I click that link I am taken to my new coupon page' do
       merchant1 = create(:merchant)
 
       visit merchant_coupons_path(merchant1)
